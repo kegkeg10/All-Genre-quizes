@@ -1,0 +1,55 @@
+{
+  "questions": [
+    {
+      "question": "What movie won best picture in 1995",
+      "options": ["Toy Story", "BraveHeart", "Apollo 13", "12 Monkeys"],
+      "correctOption": 1,
+      "points": 10
+    },
+    {
+      "question": "How Many killers are in the scream franchise?",
+      "options": ["11", "9", "13", "12"],
+      "correctOption": 3,
+      "points": 10
+    },
+    {
+      "question": "What actor won best performance in a leading role in 2021?",
+      "options": ["Anthony Hopkins-The Father", "Riz Ahmed-Sound of metal", "Steven Yeun-Minari", "Chadwick Boseman-Ma Raineys black bottom"],
+      "correctOption": 0,
+      "points": 10
+    },
+    {
+      "question": "What Movie is not apart of the Cornetto Trilogy?",
+      "options": [
+        "Worlds End",
+        "Hot Fuzz",
+        "Shaun of the dead",
+        "Paul"
+      ],
+      "correctOption": 3,
+      "points": 30
+    },
+    {
+      "question": "What Anime Movie Famously won best animated Film?",
+      "options": [
+        "Your Name",
+        "Princess Mononoke",
+        "Spirited Away",
+        "Akira"
+      ],
+      "correctOption": 2,
+      "points": 20
+    },
+    {
+      "question": "Whats the name of Quint Boat in Jaws.",
+      "options": [
+        "Orca",
+        "The Eater",
+        "hunter",
+        "The Killer"
+      ],
+      "correctOption": 0,
+      "points": 30
+    }
+  ]
+}

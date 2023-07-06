@@ -9,10 +9,65 @@ import NextButton from "./NextButton";
 import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
 
+const quizData = {
+  "questions": [
+    {
+      "question": "What movie won best picture in 1995",
+      "options": ["Toy Story", "BraveHeart", "Apollo 13", "12 Monkeys"],
+      "correctOption": 1,
+      "points": 10
+    },
+    {
+      "question": "How Many killers are in the scream franchise?",
+      "options": ["11", "9", "13", "12"],
+      "correctOption": 3,
+      "points": 10
+    },
+    {
+      "question": "What actor won best performance in a leading role in 2021?",
+      "options": ["Anthony Hopkins-The Father", "Riz Ahmed-Sound of metal", "Steven Yeun-Minari", "Chadwick Boseman-Ma Raineys black bottom"],
+      "correctOption": 0,
+      "points": 10
+    },
+    {
+      "question": "What Movie is not apart of the Cornetto Trilogy?",
+      "options": [
+        "Worlds End",
+        "Hot Fuzz",
+        "Shaun of the dead",
+        "Paul"
+      ],
+      "correctOption": 3,
+      "points": 30
+    },
+    {
+      "question": "What Anime Movie Famously won best animated Film?",
+      "options": [
+        "Your Name",
+        "Princess Mononoke",
+        "Spirited Away",
+        "Akira"
+      ],
+      "correctOption": 2,
+      "points": 20
+    },
+    {
+      "question": "Whats the name of Quint Boat in Jaws.",
+      "options": [
+        "Orca",
+        "The Eater",
+        "hunter",
+        "The Killer"
+      ],
+      "correctOption": 0,
+      "points": 30
+    }
+  ]
+};
+
 const initialState = {
-  questions: [],
-  // 'loading', 'error', 'ready', 'active', finished
-  status: "loading",
+  questions: quizData.questions,
+  status: "ready",
   index: 0,
   answer: null,
   points: 0,
@@ -21,21 +76,10 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "dataReceived":
-      return {
-        ...state,
-        questions: action.payload,
-        status: "ready",
-      };
-    case "dataFailed":
-      return {
-        ...state,
-        status: "error",
-      };
     case "start":
       return { ...state, status: "active" };
     case "newAnswer":
-      const question = state.questions.at(state.index);
+      const question = state.questions[state.index];
       return {
         ...state,
         answer: action.payload,
@@ -46,20 +90,23 @@ function reducer(state, action) {
       };
     case "nextQuestion":
       return { ...state, index: state.index + 1, answer: null };
-    case "finish" :
-      return {...state, status: 'finished', highscore: state.points > state.highscore ? state.points : state.highscore}
+    case "finish":
+      return {
+        ...state,
+        status: "finished",
+        highscore:
+          state.points > state.highscore ? state.points : state.highscore,
+      };
     case "restart":
-      return {...initialState, questions: state.questions, status: 'ready'};
+      return { ...initialState, questions: state.questions, status: "ready" };
     default:
       throw new Error("Action Unknown");
   }
 }
 
 export default function App() {
-  const [{ questions, status, index, answer, points, highscore }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [{ questions, status, index, answer, points, highscore }, dispatch] =
+    useReducer(reducer, initialState);
 
   const numQuestions = questions.length;
   const maxPossiblePoints = questions.reduce(
@@ -68,10 +115,7 @@ export default function App() {
   );
 
   useEffect(function () {
-    fetch("http://localhost:8000/questions")
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
-      .catch((err) => dispatch({ type: "dataFailed" }));
+    dispatch({ type: "start" });
   }, []);
 
   return (
@@ -107,9 +151,13 @@ export default function App() {
           </>
         )}
         {status === "finished" && (
-          <FinishScreen points={points} maxPossiblePoints={maxPossiblePoints} highscore={highscore} dispatch={dispatch} />
+          <FinishScreen
+            points={points}
+            maxPossiblePoints={maxPossiblePoints}
+            highscore={highscore}
+            dispatch={dispatch}
+          />
         )}
-        {/* reason we do answer={answer} is so we can see if we got the answer right  */}
       </Main>
     </div>
   );
