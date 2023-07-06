@@ -1,8 +1,8 @@
 function Header() {
   return (
     <header className='app-header'>
-      <img src='logo512.png' alt='React logo' />
-      <h1>The React Quiz</h1>
+      <img src='movielogo.png' alt='React logo' />
+      <h1>The Movie Quiz</h1>
     </header>
   );
 }
